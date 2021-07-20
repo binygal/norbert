@@ -25,6 +25,10 @@ export default function NorbertVisualModel(
     size: { width: 1, height: canvasSize.height },
     position: { x: canvasSize.width, y: 0 },
   };
+  const bottomCollisionObject: Rect = {
+    size: { width: canvasSize.width, height: 1 },
+    position: { x: 0, y: canvasSize.height },
+  };
 
   const physicsCalculator = PhysicsCalculator();
   const positionUpdater = PositionUpdater(canvasSize, physicsCalculator);
@@ -62,6 +66,9 @@ export default function NorbertVisualModel(
       physicsCalculator.fall(e);
       if (physicsCalculator.checkCollision(player.element, e)) {
         logic.collectItem(id);
+      }
+      if (physicsCalculator.checkCollision(e, bottomCollisionObject)) {
+        logic.missItem(id);
       }
     });
   }

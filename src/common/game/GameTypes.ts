@@ -1,7 +1,12 @@
 import { Direction } from '../input/InputTypes';
 import { Point, Size } from '../types/Geometry';
 
-export type GameState = 'not-started' | 'on-going' | 'failed' | 'completed';
+export type GameState =
+  | 'not-started'
+  | 'on-going'
+  | 'failed'
+  | 'failed-misses'
+  | 'completed';
 
 export type DropItemsType = 'dairy' | 'parve' | 'meat';
 
@@ -45,6 +50,7 @@ export interface INorbertLogic {
   score: number;
   fallingItems: FallingFoodItem[];
   collectItem(itemId: string): void;
+  missItem(itemId: string): void;
 }
 
 export interface INorbertVisualModel {

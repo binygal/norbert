@@ -4,6 +4,7 @@ import {
   renderFailedOverlay,
   renderInsturctionsOverlay,
   renderSuccessfulOverlay,
+  renderTooManyMisses,
 } from './RenderOverlay';
 import { INorbertRenderer } from './RenderTypes';
 
@@ -49,6 +50,10 @@ export default function NorbertRenderer(
 
     if (logic.state === 'completed') {
       renderSuccessfulOverlay(ctx);
+    }
+
+    if (logic.state === 'failed-misses') {
+      renderTooManyMisses(ctx);
     }
   }
   return {

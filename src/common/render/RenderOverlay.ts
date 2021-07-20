@@ -54,3 +54,14 @@ export function renderSuccessfulOverlay(ctx: CanvasRenderingContext2D): void {
   ];
   renderInTheMiddle(ctx, title, texts);
 }
+
+export function renderTooManyMisses(ctx: CanvasRenderingContext2D): void {
+  const title = `הפלת יותר מדי אוכל${'\u200F'}`;
+  const texts = [
+    `אנחנו יודעים שאוכל פרווה הוא לא תמיד טעים${'\u200F'}`,
+    `אבל באמת! יש באפריקה מלא ילדים רעבים${'\u200F'}`,
+    'והלוואי שלי היה כזה אוכל כשאני הייתי ילד',
+    `ומה שווה כל השש שעות הזה עם כזה בל תשחית?${'\u200F'}`,
+  ];
+  renderInTheMiddle(ctx, title, texts);
+}

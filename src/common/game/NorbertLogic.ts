@@ -53,6 +53,25 @@ export default function NorbertLogic(): INorbertLogic {
     fallingItems.splice(itemIdx, 1);
   }
 
+  let missedItems = 0;
+
+  function missItem(itemId: string): void {
+    const itemIdx = fallingItems.findIndex((i) => i.id === itemId);
+    const item = fallingItems[itemIdx];
+    if (!item) {
+      return;
+    }
+
+    if (item.type === 'parve') {
+      missedItems += 1;
+      if (missedItems === 3) {
+        state = 'failed-misses';
+      }
+    }
+
+    fallingItems.splice(itemIdx, 1);
+  }
+
   return {
     get state() {
       return state;
@@ -66,5 +85,6 @@ export default function NorbertLogic(): INorbertLogic {
       return fallingItems;
     },
     collectItem,
+    missItem,
   };
 }
