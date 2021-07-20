@@ -8,8 +8,7 @@ export default function NorbertLogic(): INorbertLogic {
   const scoreProvider = ScoreProvider(6);
   const fallingItems: FallingFoodItem[] = [];
 
-  // let state: GameState = 'not-started';
-  let state: GameState = 'failed';
+  let state: GameState = 'not-started';
 
   function start(): void {
     state = 'on-going';

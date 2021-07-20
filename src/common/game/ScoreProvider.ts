@@ -1,4 +1,4 @@
-import { IScoreProvider } from "./GameTypes";
+import { IScoreProvider } from './GameTypes';
 
 export default function ScoreProvider(numberToCatch: number): IScoreProvider {
   let yetToCatch = numberToCatch;
@@ -8,14 +8,14 @@ export default function ScoreProvider(numberToCatch: number): IScoreProvider {
   }
 
   function successfullCatch(): void {
-    yetToCatch -= 1;
+    yetToCatch = Math.max(yetToCatch - 1, 0);
   }
 
   return {
-    get yetToCatch() { 
-      return yetToCatch
+    get yetToCatch() {
+      return yetToCatch;
     },
     extenderCatch,
-    successfullCatch
-  }
+    successfullCatch,
+  };
 }

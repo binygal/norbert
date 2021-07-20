@@ -1,5 +1,25 @@
-export function renderInsturctionsOverlay(ctx: CanvasRenderingContext2D): void {
+function renderInTheMiddle(
+  ctx: CanvasRenderingContext2D,
+  title: string,
+  texts: string[],
+): void {
   const center = { x: ctx.canvas.width / 2, y: ctx.canvas.height / 2 };
+  const startingHeightPoint = ctx.canvas.height / 5;
+
+  ctx.fillStyle = '#44444499';
+  ctx.textAlign = 'center';
+  ctx.moveTo(center.x, center.y);
+  ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+  ctx.fillStyle = 'white';
+  ctx.fillText(title, center.x, startingHeightPoint);
+  ctx.font = '16px Arial';
+  texts.forEach((r, idx) => {
+    ctx.fillText(r, center.x, startingHeightPoint + 30 + idx * 20);
+  });
+  ctx.moveTo(-center.x, -center.y);
+}
+
+export function renderInsturctionsOverlay(ctx: CanvasRenderingContext2D): void {
   const title = `שש שעות - המשחק!${'\u200F'}`;
   const rules = [
     'במשחק שש שעות אתם נדרשים לתפוס את האוכל הנופל',
@@ -13,21 +33,24 @@ export function renderInsturctionsOverlay(ctx: CanvasRenderingContext2D): void {
     `הקש רווח כדי להתחיל...${'\u200F'}`,
   ];
 
-  const startingHeightPoint = ctx.canvas.height / 5;
-
-  ctx.fillStyle = '#44444499';
-  ctx.textAlign = 'center';
-  ctx.moveTo(center.x, center.y);
-  ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-  ctx.fillStyle = 'white';
-  ctx.fillText(title, center.x, startingHeightPoint);
-  ctx.font = '16px Arial';
-  rules.forEach((r, idx) => {
-    ctx.fillText(r, center.x, startingHeightPoint + 30 + idx * 20);
-  });
-  ctx.moveTo(-center.x, -center.y);
+  renderInTheMiddle(ctx, title, rules);
 }
 
 export function renderFailedOverlay(ctx: CanvasRenderingContext2D): void {
-  const center = { x: ctx.canvas.width / 2, y: ctx.canvas.height / 2 };
+  const title = `אכלת חלבי לפני הזמן 😦${'\u200F'}`;
+  const texts = [
+    'לא שופטים אותך, אתה בטח הולנדי או משהו',
+    `מצד שני, אם אתה הולנדי מה אתה מחפש באפליקציה של שש שעות?${'\u200F'}`,
+  ];
+
+  renderInTheMiddle(ctx, title, texts);
+}
+
+export function renderSuccessfulOverlay(ctx: CanvasRenderingContext2D): void {
+  const title = `הצלחת!${'\u200F'}`;
+  const texts = [
+    `אין כמו כוס קפה שמחכים לה שש שעות, לא?${'\u200F'}`,
+    `או שאתה מאלו שאוהבים את תשעת הימים?${'\u200F'}`,
+  ];
+  renderInTheMiddle(ctx, title, texts);
 }

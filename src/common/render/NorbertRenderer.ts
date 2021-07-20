@@ -1,6 +1,10 @@
 import { INorbertLogic, INorbertVisualModel } from '../game/GameTypes';
 import { center } from '../types/GeometryFunctions';
-import renderInsturctionsOverlay from './RenderOverlay';
+import {
+  renderFailedOverlay,
+  renderInsturctionsOverlay,
+  renderSuccessfulOverlay,
+} from './RenderOverlay';
 import { INorbertRenderer } from './RenderTypes';
 
 export default function NorbertRenderer(
@@ -37,6 +41,14 @@ export default function NorbertRenderer(
 
     if (logic.state === 'not-started') {
       renderInsturctionsOverlay(ctx);
+    }
+
+    if (logic.state === 'failed') {
+      renderFailedOverlay(ctx);
+    }
+
+    if (logic.state === 'completed') {
+      renderSuccessfulOverlay(ctx);
     }
   }
   return {
