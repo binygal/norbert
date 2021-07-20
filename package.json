@@ -1,0 +1,42 @@
+{
+  "name": "norbert",
+  "version": "0.0.1",
+  "description": "A game for catching objects",
+  "main": "index.ts",
+  "scripts": {
+    "test": "jest .",
+    "start": "parcel serve ./src/index.html",
+    "lint": "eslint ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/binygal/norbert.git"
+  },
+  "keywords": [
+    "game"
+  ],
+  "author": "Binyamin Galinsky",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/binygal/norbert/issues"
+  },
+  "homepage": "https://github.com/binygal/norbert#readme",
+  "devDependencies": {
+    "@parcel/transformer-inline-string": "^2.0.0-beta.3.1",
+    "@types/uuid": "^8.3.1",
+    "@typescript-eslint/eslint-plugin": "^4.28.4",
+    "@typescript-eslint/parser": "^4.28.4",
+    "eslint": "^7.31.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-import-resolver-typescript": "^2.4.0",
+    "eslint-plugin-import": "^2.23.4",
+    "install": "^0.13.0",
+    "npm": "^7.20.0",
+    "parcel": "^2.0.0-beta.3.1"
+  },
+  "dependencies": {
+    "rxjs": "^7.2.0",
+    "typescript": "^4.3.5",
+    "uuid": "^8.3.2"
+  }
+}
