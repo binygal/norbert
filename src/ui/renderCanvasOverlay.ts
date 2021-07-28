@@ -7,14 +7,14 @@ export default function renderCanvasOverlay(canvas: HTMLElement): void {
   fullscreenButton.style.height = '10px';
   fullscreenButton.style.border = '2px solid white';
   fullscreenButton.addEventListener('click', async () => {
+    await canvas.requestFullscreen();
     if (window.screen.orientation.lock) {
       try {
-        await window.screen.orientation.lock('landscape');
-      } catch {
+        await window.screen.orientation.lock('landscape-primary');
+      } catch (e) {
         // This device is probably not a cellphone
       }
     }
-    canvas.requestFullscreen();
   });
 
   if (canvas.parentElement) {
