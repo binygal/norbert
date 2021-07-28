@@ -9,7 +9,11 @@ import { INorbertRenderer } from './render/RenderTypes';
 import renderCanvasOverlay from '../ui/renderCanvasOverlay';
 
 export default function NorbertGame(selector: string): INorbertGame {
-  const parent = document.querySelector(selector);
+  const parent = document.querySelector<HTMLElement>(selector);
+  parent.style.position = 'relative';
+  parent.style.width = '800px';
+  parent.style.height = '450px';
+
   let canvas: HTMLCanvasElement;
 
   const norbertLogic = NorbertLogic();
