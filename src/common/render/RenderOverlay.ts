@@ -19,8 +19,17 @@ function renderInTheMiddle(
   ctx.moveTo(-center.x, -center.y);
 }
 
-export function renderInsturctionsOverlay(ctx: CanvasRenderingContext2D): void {
+export function renderInsturctionsOverlay(
+  ctx: CanvasRenderingContext2D,
+  isMobile: boolean,
+): void {
   const title = `שש שעות - המשחק!${'\u200F'}`;
+  const mobileInstructions =
+    'כדי לזוז לימין, לחצו בימין המסך. כדי לזוז לשמאל, לחצו בשמאל המסך';
+  const mobileStart = 'לחצו על המסך כדי להתחיל';
+  const desktopInstructions = 'השליטה במשחק בעזרת מקשי החיצים';
+  const desktopStart = `הקש רווח כדי להתחיל...${'\u200F'}`;
+
   const rules = [
     'במשחק שש שעות אתם נדרשים לתפוס את האוכל הנופל',
     'שימו לב! אתם בשריים אבל צריכים לאכול כל שעה כדי שהזמן יעבור',
@@ -30,9 +39,9 @@ export function renderInsturctionsOverlay(ctx: CanvasRenderingContext2D): void {
     `איך מנצחים? צריך לאכול משהו חלבי אחרי שהסתיימו שש השעות (שימו לב לפינה השמאלית)${'\u200F'}`,
     'אה, עוד משהו. נפלו שלושה מאכלים פרווה לרצפה? נפסלתם',
     '',
-    'השליטה במשחק בעזרת מקשי החיצים',
+    isMobile ? mobileInstructions : desktopInstructions,
     '',
-    `הקש רווח כדי להתחיל...${'\u200F'}`,
+    isMobile ? mobileStart : desktopStart,
   ];
 
   renderInTheMiddle(ctx, title, rules);

@@ -16,7 +16,10 @@ export default function renderCanvasOverlay(
     if (window.screen.orientation.lock) {
       try {
         await window.screen.orientation.lock('landscape-primary');
-        changeSizeCallback({ width: 800, height: 450 });
+        changeSizeCallback({
+          width: Math.min(window.screen.width, 800),
+          height: Math.min(window.screen.height, 450),
+        });
       } catch (e) {
         // This device is probably not a cellphone
       }

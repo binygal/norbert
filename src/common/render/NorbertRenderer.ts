@@ -1,3 +1,4 @@
+import detectMobileDevice from '../browser/detectMobileDevice';
 import { INorbertLogic, INorbertVisualModel } from '../game/GameTypes';
 import { center } from '../types/GeometryFunctions';
 import {
@@ -41,7 +42,7 @@ export default function NorbertRenderer(
     ctx.fillText(`${logic.score}`, ctx.canvas.width - 50, 50);
 
     if (logic.state === 'not-started') {
-      renderInsturctionsOverlay(ctx);
+      renderInsturctionsOverlay(ctx, detectMobileDevice());
     }
 
     if (logic.state === 'failed') {

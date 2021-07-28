@@ -1,8 +1,15 @@
+import detectMobileDevice from '../browser/detectMobileDevice';
 import KeyboardDevice from './devices/KeyboardDevice';
-import { Direction, INorbertInput } from './InputTypes';
+import TouchDevice from './devices/TouchDevice';
+import { Direction, IInputDevice, INorbertInput } from './InputTypes';
 
 export default function NorbertInput(): INorbertInput {
-  const inputDevice = KeyboardDevice();
+  let inputDevice: IInputDevice;
+  if (detectMobileDevice()) {
+    inputDevice = TouchDevice();
+  } else {
+    inputDevice = KeyboardDevice();
+  }
   function didInputToStartReceived(): boolean {
     return inputDevice.acceptInputRecieved();
   }

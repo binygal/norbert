@@ -19,9 +19,20 @@ export default function NorbertGame(selector: string): INorbertGame {
   let visualModel: INorbertVisualModel;
   let renderer: INorbertRenderer;
 
-  const canvasSize = { width: parent.clientWidth, height: parent.clientHeight };
+  const canvasSize = {
+    width: Math.min(window.screen.width, parent.clientWidth),
+    height: Math.min(window.screen.height, parent.clientHeight),
+  };
+
+  console.log(
+    Math.min(window.screen.height, parent.clientHeight),
+    window.screen.height,
+    parent.clientHeight,
+    canvasSize,
+  );
 
   function setCanvasSize(size: Size) {
+    console.log('setting cavnas size', size);
     canvas.width = size.width;
     canvas.height = size.height;
   }
@@ -45,10 +56,7 @@ export default function NorbertGame(selector: string): INorbertGame {
       (accu, [name, element]) => ({ ...accu, [name]: element }),
       {} as Record<string, HTMLImageElement>,
     );
-    canvas = loader.createCanvas({
-      width: parent.clientWidth,
-      height: parent.clientHeight,
-    });
+    canvas = loader.createCanvas(canvasSize);
     parent.appendChild(canvas);
     renderCanvasOverlay(canvas, setCanvasSize);
     visualModel = NorbertVisualModel(norbertLogic, canvasSize);
