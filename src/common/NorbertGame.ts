@@ -18,7 +18,7 @@ export default function NorbertGame(selector: string): INorbertGame {
   let visualModel: INorbertVisualModel;
   let renderer: INorbertRenderer;
 
-  const canvasSize = { width: parent.clientWidth, height: parent.clientHeight };
+  const canvasSize = { width: parent.scrollWidth, height: parent.scrollHeight };
 
   async function load(): Promise<void> {
     const loader = Loader();
