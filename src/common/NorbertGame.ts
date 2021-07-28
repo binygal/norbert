@@ -6,6 +6,7 @@ import NorbertInput from './input/NorbertInput';
 import NorbertVisualModel from './game/NorbertVisualModel';
 import NorbertRenderer from './render/NorbertRenderer';
 import { INorbertRenderer } from './render/RenderTypes';
+import renderCanvasOverlay from '../ui/renderCanvasOverlay';
 
 export default function NorbertGame(selector: string): INorbertGame {
   const parent = document.querySelector(selector);
@@ -42,6 +43,7 @@ export default function NorbertGame(selector: string): INorbertGame {
       height: parent.clientHeight,
     });
     parent.appendChild(canvas);
+    renderCanvasOverlay(canvas);
     visualModel = NorbertVisualModel(norbertLogic, canvasSize);
     renderer = NorbertRenderer(
       norbertLogic,
