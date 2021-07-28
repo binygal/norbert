@@ -9,7 +9,8 @@ export default function NorbertVisualModel(
   logic: INorbertLogic,
   canvasSize: Size,
 ): INorbertVisualModel {
-  const elementGenerator = ElementGenerator(canvasSize, {
+  let renderSize = canvasSize;
+  const elementGenerator = ElementGenerator(renderSize, {
     player: ['boy'],
     dropper: ['hands'],
     dairy: ['pizza', 'coffee'],
@@ -18,20 +19,20 @@ export default function NorbertVisualModel(
   });
 
   const leftCollisionObject: Rect = {
-    size: { width: 1, height: canvasSize.height },
+    size: { width: 1, height: renderSize.height },
     position: { x: 0, y: 0 },
   };
   const rightCollisionObject: Rect = {
-    size: { width: 1, height: canvasSize.height },
-    position: { x: canvasSize.width, y: 0 },
+    size: { width: 1, height: renderSize.height },
+    position: { x: renderSize.width, y: 0 },
   };
   const bottomCollisionObject: Rect = {
-    size: { width: canvasSize.width, height: 1 },
-    position: { x: 0, y: canvasSize.height },
+    size: { width: renderSize.width, height: 1 },
+    position: { x: 0, y: renderSize.height },
   };
 
   const physicsCalculator = PhysicsCalculator();
-  const positionUpdater = PositionUpdater(canvasSize, physicsCalculator);
+  const positionUpdater = PositionUpdater(renderSize, physicsCalculator);
 
   const hands = elementGenerator.generateDropingHands();
   const player = elementGenerator.generatePlayer();
@@ -73,11 +74,16 @@ export default function NorbertVisualModel(
     });
   }
 
+  function updateSize(size: Size): void {
+    renderSize = size;
+  }
+
   return {
     get renderableElements() {
       return renderableElements.concat(Array.from(fallingItemsMap.values()));
     },
     updateInput,
     newFrameUpdate,
+    updateSize,
   };
 }

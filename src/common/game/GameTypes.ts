@@ -56,5 +56,6 @@ export interface INorbertLogic {
 export interface INorbertVisualModel {
   renderableElements: Element[];
   updateInput(direction: Direction): void;
+  updateSize(size: Size): void;
   newFrameUpdate(): void;
 }

@@ -32,9 +32,9 @@ export default function NorbertGame(selector: string): INorbertGame {
   );
 
   function setCanvasSize(size: Size) {
-    console.log('setting cavnas size', size);
     canvas.width = size.width;
     canvas.height = size.height;
+    visualModel.updateSize(size);
   }
 
   async function load(): Promise<void> {
