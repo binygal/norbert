@@ -18,8 +18,12 @@ export default function KeyboardDevice(): IInputDevice {
 
   document.body.addEventListener('keydown', keydownCallback);
 
-  function acceptInputRecieved(): boolean {
-    return hasSpaceClicked;
+  function takeStartInput(): boolean {
+    if (hasSpaceClicked) {
+      hasSpaceClicked = false;
+      return true;
+    }
+    return false;
   }
 
   function getDirection(): Direction {
@@ -27,7 +31,7 @@ export default function KeyboardDevice(): IInputDevice {
   }
 
   return {
-    acceptInputRecieved,
+    takeStartInput,
     getDirection,
   };
 }

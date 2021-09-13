@@ -11,7 +11,7 @@ export default function NorbertInput(): INorbertInput {
     inputDevice = KeyboardDevice();
   }
   function didInputToStartReceived(): boolean {
-    return inputDevice.acceptInputRecieved();
+    return inputDevice.takeStartInput();
   }
 
   function getDirection(): Direction {
@@ -19,7 +19,7 @@ export default function NorbertInput(): INorbertInput {
   }
 
   return {
-    didInputToStartReceived,
+    takeStartInput: didInputToStartReceived,
     getDirection,
   };
 }

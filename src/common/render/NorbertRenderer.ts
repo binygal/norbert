@@ -46,15 +46,15 @@ export default function NorbertRenderer(
     }
 
     if (logic.state === 'failed') {
-      renderFailedOverlay(ctx);
+      renderFailedOverlay(ctx, detectMobileDevice());
     }
 
     if (logic.state === 'completed') {
-      renderSuccessfulOverlay(ctx);
+      renderSuccessfulOverlay(ctx, detectMobileDevice());
     }
 
     if (logic.state === 'failed-misses') {
-      renderTooManyMisses(ctx);
+      renderTooManyMisses(ctx, detectMobileDevice());
     }
   }
   return {

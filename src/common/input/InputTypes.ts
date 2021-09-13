@@ -7,11 +7,11 @@ export interface IInputProvider {
 }
 
 export interface IInputDevice {
-  acceptInputRecieved(): boolean;
+  takeStartInput(): boolean;
   getDirection(): Direction;
 }
 
 export interface INorbertInput {
-  didInputToStartReceived(): boolean;
+  takeStartInput(): boolean;
   getDirection(): Direction;
 }

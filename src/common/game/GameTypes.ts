@@ -1,5 +1,5 @@
 import { Direction } from '../input/InputTypes';
-import { Point, Size } from '../types/Geometry';
+import { Point, Rect, Size } from '../types/Geometry';
 
 export type GameState =
   | 'not-started'
@@ -51,11 +51,19 @@ export interface INorbertLogic {
   fallingItems: FallingFoodItem[];
   collectItem(itemId: string): void;
   missItem(itemId: string): void;
+  reset(): void;
+}
+
+export interface INorbertPositioning {
+  leftCollision: Rect;
+  rightCollision: Rect;
+  bottomCollision: Rect;
+  currentViewport: Size;
+  updateViewport(newViewport: Size): void;
 }
 
 export interface INorbertVisualModel {
   renderableElements: Element[];
   updateInput(direction: Direction): void;
-  updateSize(size: Size): void;
-  newFrameUpdate(): void;
+  newFrameUpdate(staticFrame: boolean): void;
 }

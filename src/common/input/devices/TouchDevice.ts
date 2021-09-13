@@ -2,10 +2,11 @@ import { Point } from '../../types/Geometry';
 import { Direction, IInputDevice } from '../InputTypes';
 
 export default function TouchDevice(): IInputDevice {
+  let waitingToAcceptTouch = false;
   let hasBeenTouched = false;
   let touchLocation: Point = { x: 0, y: 0 };
   document.body.addEventListener('touchstart', (e: TouchEvent) => {
-    if (!hasBeenTouched) {
+    if (!hasBeenTouched && waitingToAcceptTouch) {
       hasBeenTouched = true;
     } else {
       touchLocation = { x: e.touches[0].clientX, y: e.touches[0].clientY };
@@ -17,7 +18,17 @@ export default function TouchDevice(): IInputDevice {
   });
 
   function acceptInputRecieved(): boolean {
-    return hasBeenTouched;
+    if (!waitingToAcceptTouch) {
+      waitingToAcceptTouch = true;
+      return false;
+    }
+
+    if (hasBeenTouched) {
+      waitingToAcceptTouch = false;
+      hasBeenTouched = false;
+      return true;
+    }
+    return false;
   }
 
   function getDirection(): Direction {
@@ -27,7 +38,7 @@ export default function TouchDevice(): IInputDevice {
   }
 
   return {
-    acceptInputRecieved,
+    takeStartInput: acceptInputRecieved,
     getDirection,
   };
 }

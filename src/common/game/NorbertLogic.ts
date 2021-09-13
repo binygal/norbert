@@ -72,6 +72,10 @@ export default function NorbertLogic(): INorbertLogic {
     fallingItems.splice(itemIdx, 1);
   }
 
+  function reset(): void {
+    state = 'not-started';
+  }
+
   return {
     get state() {
       return state;
@@ -86,5 +90,6 @@ export default function NorbertLogic(): INorbertLogic {
     },
     collectItem,
     missItem,
+    reset,
   };
 }

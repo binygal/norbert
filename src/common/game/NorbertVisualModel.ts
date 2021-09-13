@@ -2,15 +2,18 @@ import ElementGenerator from '../../elements/ElementGenerator';
 import PhysicsCalculator from '../../physics/PhysicsCalculator';
 import PositionUpdater from '../../physics/PositionUpdater';
 import { Direction } from '../input/InputTypes';
-import { Rect, Size } from '../types/Geometry';
-import { Element, INorbertLogic, INorbertVisualModel } from './GameTypes';
+import {
+  Element,
+  INorbertLogic,
+  INorbertPositioning,
+  INorbertVisualModel,
+} from './GameTypes';
 
 export default function NorbertVisualModel(
   logic: INorbertLogic,
-  canvasSize: Size,
+  positionProvider: INorbertPositioning,
 ): INorbertVisualModel {
-  let renderSize = canvasSize;
-  const elementGenerator = ElementGenerator(renderSize, {
+  const elementGenerator = ElementGenerator({
     player: ['boy'],
     dropper: ['hands'],
     dairy: ['pizza', 'coffee'],
@@ -18,37 +21,33 @@ export default function NorbertVisualModel(
     parve: ['salad', 'fries'],
   });
 
-  const leftCollisionObject: Rect = {
-    size: { width: 1, height: renderSize.height },
-    position: { x: 0, y: 0 },
-  };
-  const rightCollisionObject: Rect = {
-    size: { width: 1, height: renderSize.height },
-    position: { x: renderSize.width, y: 0 },
-  };
-  const bottomCollisionObject: Rect = {
-    size: { width: renderSize.width, height: 1 },
-    position: { x: 0, y: renderSize.height },
-  };
-
   const physicsCalculator = PhysicsCalculator();
-  const positionUpdater = PositionUpdater(renderSize, physicsCalculator);
+  const positionUpdater = PositionUpdater(positionProvider, physicsCalculator);
 
-  const hands = elementGenerator.generateDropingHands();
-  const player = elementGenerator.generatePlayer();
+  const hands = elementGenerator.generateDropingHands({ x: 100, y: 0 });
+  const player = elementGenerator.generatePlayer({
+    x: 0,
+    y: positionProvider.currentViewport.height - 50,
+  });
   const renderableElements = [hands.element, player.element];
   const fallingItemsMap = new Map<string, Element>();
 
   function updateInput(direction: Direction): void {
     player.element.position.x += direction[0] === 'right' ? 2 : -2;
     const collisionBorder =
-      direction[0] === 'right' ? rightCollisionObject : leftCollisionObject;
+      direction[0] === 'right'
+        ? positionProvider.rightCollision
+        : positionProvider.leftCollision;
     if (physicsCalculator.checkCollision(player.element, collisionBorder)) {
       player.element.position.x += direction[0] === 'right' ? -2 : 2;
     }
   }
 
-  function newFrameUpdate(): void {
+  function newFrameUpdate(staticFrame: boolean): void {
+    player.element.position.y = positionProvider.currentViewport.height - 50;
+    if (staticFrame) {
+      return;
+    }
     positionUpdater.moveHorziontally(hands);
     const fallingItemsIds: Record<string, boolean> = {};
     logic.fallingItems.forEach((i) => {
@@ -68,14 +67,12 @@ export default function NorbertVisualModel(
       if (physicsCalculator.checkCollision(player.element, e)) {
         logic.collectItem(id);
       }
-      if (physicsCalculator.checkCollision(e, bottomCollisionObject)) {
+      if (
+        physicsCalculator.checkCollision(e, positionProvider.bottomCollision)
+      ) {
         logic.missItem(id);
       }
     });
-  }
-
-  function updateSize(size: Size): void {
-    renderSize = size;
   }
 
   return {
@@ -84,6 +81,5 @@ export default function NorbertVisualModel(
     },
     updateInput,
     newFrameUpdate,
-    updateSize,
   };
 }

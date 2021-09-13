@@ -1,29 +1,21 @@
-import { MoveableElement } from '../common/game/GameTypes';
-import { Rect, Size } from '../common/types/Geometry';
+/* eslint-disable no-param-reassign */
+import { INorbertPositioning, MoveableElement } from '../common/game/GameTypes';
 import { IPhysicsCalculator, IPositionUpdater } from './PhysicsTypes';
 
 export default function PositionUpdater(
-  canvasSize: Size,
+  positionProvider: INorbertPositioning,
   physics: IPhysicsCalculator,
 ): IPositionUpdater {
-  const leftCollisionObject: Rect = {
-    size: { width: 1, height: canvasSize.height },
-    position: { x: 0, y: 0 },
-  };
-  const rightCollisionObject: Rect = {
-    size: { width: 1, height: canvasSize.height },
-    position: { x: canvasSize.width, y: 0 },
-  };
   function moveFromRightToLeft(element: MoveableElement): void {
     if (
       element.direction === 'right' &&
-      physics.checkCollision(element.element, rightCollisionObject)
+      physics.checkCollision(element.element, positionProvider.rightCollision)
     ) {
       element.direction = 'left';
     }
     if (
       element.direction === 'left' &&
-      physics.checkCollision(element.element, leftCollisionObject)
+      physics.checkCollision(element.element, positionProvider.leftCollision)
     ) {
       element.direction = 'right';
     }

@@ -1,7 +1,6 @@
 import {
   DropItemsType,
   DroppedElement,
-  Element,
   MoveableElement,
 } from '../common/game/GameTypes';
 import { Point, Size } from '../common/types/Geometry';
@@ -18,28 +17,27 @@ function randomTake(array: string[]): string {
 }
 
 export default function ElementGenerator(
-  canvasSize: Size,
   availableElements: AvailableElements,
 ): IElementGenerator {
-  function generatePlayer(): MoveableElement {
+  function generatePlayer(position: Point): MoveableElement {
     return {
       direction: 'right',
       element: {
         image: randomTake(availableElements.player),
-        position: { x: 0, y: canvasSize.height - 50 },
+        position: { x: position.x, y: position.y },
         size: { width: 50, height: 50 },
         rotation: 0,
       },
     };
   }
 
-  function generateDropingHands(): MoveableElement {
+  function generateDropingHands(position: Point): MoveableElement {
     return {
       direction: 'right',
       element: {
         image: randomTake(availableElements.dropper),
         size: { height: 50, width: 50 },
-        position: { x: 100, y: 0 },
+        position: { ...position },
         rotation: Math.PI,
       },
     };
